@@ -22,12 +22,17 @@ use App\States\OrderState;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * 
- * @property-read Collection|User[] $users
- * @property-read Collection|Order[] $orders
+ * @property-read OrderType $type
+ * @property-read User $manager
+ * @property-read Partnership $partnership
+ * @property-read Collection|User[] $workers
  */
 
-class Order extends Model {
+class Order extends Model
+{
     use HasFactory;
+
+    public $table = 'orders';
 
     public const STATUSES = ['created', 'assigned', 'completed'];
  
@@ -57,27 +62,33 @@ class Order extends Model {
         'updated_at'
     ];
     
-    public function orderType() {
+    public function type()
+    {
         return $this->belongsTo(OrderType::class, 'type_id');
     }
     
-    public function partnership() {
-        return $this->belongsTo(Partnership::class);
+    public function partnership()
+    {
+        return $this->belongsTo(Partnership::class, 'partnership_id');
     }
 
-    public function manager() {
+    public function manager()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
     
-    public function workers() {
+    public function workers()
+    {
         return $this->belongsToMany(Worker::class, 'order_worker')->withPivot('amount')->withTimestamps();
     }
 
-    public function assign() {
+    public function assign()
+    {
         $this->status->transitionTo(Assigned::$name);
     }
 
-    public function complete() {
+    public function complete()
+    {
         $this->status->transitionTo(Completed::$name);
     }
 }

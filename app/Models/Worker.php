@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property string $name
- * @property string $second_name
+ * @property string $surname
  * @property string $phone
  * 
  * @property Carbon $created_at
@@ -18,20 +18,25 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read Collection|OrderType[] $excludedOrderTypes
  */
 
-class Worker extends Model {
+class Worker extends Model
+{
     use HasFactory;
+
+    public $table = 'workers';
  
     protected $fillable = [
         'name',
-        'second_name',
+        'surname',
         'phone'
     ];
 
-    public function orders() {
+    public function orders()
+    {
         return $this->belongsToMany(Order::class, 'order_worker')->withPivot('amount')->withTimestamps();
     }
 
-    public function excludedOrderTypes() {
+    public function excludedOrderTypes()
+    {
         return $this->belongsToMany(OrderType::class, 'workers_ex_order_types', 'worker_id', 'order_type_id')
             ->withTimestamps();
     }

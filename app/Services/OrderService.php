@@ -41,7 +41,7 @@ class OrderService {
         $isExcluded = $worker->excludedOrderTypes()->where('order_type_id', $order->type_id)->exists();
         if ($isExcluded) {
             throw ValidationException::withMessages([
-                'worker_id' => "The worker {$worker->surname} {$worker->name} does not fulfill orders of the type: '{$order->orderType->name}'.",
+                'worker_id' => "The worker {$worker->surname} {$worker->name} does not fulfill orders of the type: '{$order->type->name}'.",
             ]);
         }
 

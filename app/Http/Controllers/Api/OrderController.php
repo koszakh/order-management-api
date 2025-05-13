@@ -11,30 +11,35 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Http\Requests\UpdateOrderStatusRequest;
 
-class OrderController extends Controller {
+class OrderController extends Controller
+{
     protected OrderService $orderService;
 
-    public function __construct(OrderService $orderService) {
+    public function __construct(OrderService $orderService)
+    {
         $this->orderService = $orderService;
     }
 
-    public function store(StoreOrderRequest $request): OrderResource {
+    public function store(StoreOrderRequest $request): OrderResource
+    {
         $order = $this->orderService->createOrder($request->validated());
-        return new OrderResource($order->loadMissing(['orderType', 'partnership', 'manager']));
+        return new OrderResource($order->loadMissing(['type', 'partnership', 'manager']));
     }
 
-    public function assignWorker(AssignWorkerToOrderRequest $request, Order $order): OrderResource {
+    public function assignWorker(AssignWorkerToOrderRequest $request, Order $order): OrderResource
+    {
         $updatedOrder = $this->orderService->assignWorkerToOrder(
             $order,
             $request->validated()['worker_id'],
             $request->validated()['amount']
         );
         
-        return new OrderResource($updatedOrder->loadMissing(['orderType', 'partnership', 'manager', 'workers']));
+        return new OrderResource($updatedOrder->loadMissing(['type', 'partnership', 'manager', 'workers']));
     }
 
-    public function updateStatus(UpdateOrderStatusRequest $request, Order $order): OrderResource {
+    public function updateStatus(UpdateOrderStatusRequest $request, Order $order): OrderResource
+    {
         $updatedOrder = $this->orderService->updateOrderStatus($order, $request->validated()['status']);
-        return new OrderResource($updatedOrder->loadMissing(['orderType', 'partnership', 'manager', 'workers']));
+        return new OrderResource($updatedOrder->loadMissing(['type', 'partnership', 'manager', 'workers']));
     }
 }

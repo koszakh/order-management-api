@@ -28,7 +28,7 @@ class OrderResource extends JsonResource
             'address' => $this->address,
             'amount' => (float) $this->amount,
             'status' => $this->status,
-            'type' => new OrderTypeResource($this->whenLoaded('orderType')),
+            'type' => new OrderTypeResource($this->whenLoaded('type')),
             'partnership' => new PartnershipResource($this->whenLoaded('partnership')),
             'manager' => new UserResource($this->whenLoaded('manager')),
             'created_at' => $this->created_at->toIso8601String(),

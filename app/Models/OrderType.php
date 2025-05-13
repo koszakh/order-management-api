@@ -10,8 +10,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  */
 
-class OrderType extends Model {
+class OrderType extends Model
+{
     use HasFactory;
+
+    public $table = 'order_types';
  
     protected $fillable = [
         'name'
