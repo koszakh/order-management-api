@@ -28,7 +28,7 @@ class OrderApiTest extends TestCase
 
         $this->partnership = Partnership::factory()->create();
         $this->manager = User::factory()->create(['partnership_id' => $this->partnership->id]);
-        $this->orderType = OrderType::factory()->create(['name' => 'Тестовый тип']);
+        $this->orderType = OrderType::factory()->create(['name' => 'Test type']);
         Passport::actingAs($this->manager);
     }
 

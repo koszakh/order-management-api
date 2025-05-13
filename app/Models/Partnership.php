@@ -17,8 +17,11 @@ use Illuminate\Support\Collection;
  * @property-read Collection|Order[] $orders
  */
 
-class Partnership extends Model {
+class Partnership extends Model
+{
     use HasFactory;
+
+    public $table = 'partnerships';
  
     protected $fillable = [
         'name'
@@ -34,11 +37,13 @@ class Partnership extends Model {
         'updated_at'
     ];
 
-    public function users() {
+    public function users()
+    {
         return $this->hasMany(User::class);
     }
 
-    public function orders() {
+    public function orders()
+    {
         return $this->hasMany(Order::class);
     }
 }

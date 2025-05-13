@@ -26,7 +26,6 @@ class WorkerFactory extends Factory
     {
         return [
             'name' => $this->faker->firstName(),
-            'second_name' => $this->faker->boolean(70) ? $this->faker->lastName() : null,
             'surname' => $this->faker->lastName(),
             'phone' => $this->faker->unique()->phoneNumber(),
         ];
